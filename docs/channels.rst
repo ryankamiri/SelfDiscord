@@ -55,17 +55,6 @@ Sends current user's typing que to channel.
 
     client.SendTyping("channelid")
 
-.. _sendtyping:
-
-SendTyping
-==============
-
-Sends current user's typing que to channel.
-
-.. code-block:: python3
-
-    client.SendTyping("channelid")
-
 .. _sendmessage:
 
 SendMessage
