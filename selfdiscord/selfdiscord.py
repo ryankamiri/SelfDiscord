@@ -99,7 +99,14 @@ class SelfDiscord(object):
         result = self.route.SendRequest("GET", f"/v8/channels/{channelid}/messages?before={before}", proxies)
         return result.json()
 
+    def CreateCategory(self, serverid, name, proxies=None):
+        data = {"type":4,"name":name,"permission_overwrites":[]}
+        result = self.route.SendRequest("POST", f"/v8/guilds/{serverid}/channels", proxies, data)
+        return result.json()
+
     def CreateTextChannel(self, serverid, name, parentid=None, proxies=None):
+        name = name.lower()
+        name.replace(" ", "-")
         data = {"type":0,"name":name,"permission_overwrites":[]}
         if parentid:
             data["parent_id"] = parentid
@@ -180,3 +187,5 @@ class SelfDiscord(object):
         
         result = self.route.SendRequest("PATCH", "/v8/users/@me", proxies, imagePayload)
         return result.json()
+    
+#Made By RedBall

@@ -11,6 +11,17 @@ Returns all servers of current users.
 
     client.GetServers()
 
+.. _createcategory:
+
+CreateCategory
+==============
+
+Creates a Category in specified server.
+
+.. code-block:: python3
+
+    client.CreateCategory("serverid", "name")
+
 .. _createtextchannel:
 
 CreateTextChannel
@@ -22,7 +33,7 @@ Creates a Text Channel in specified server.
 
     client.CreateTextChannel("serverid", "name", "categoryid (not required)")
 
-.. _createtextchannel:
+.. _createvoicechannel:
 
 CreateVoiceChannel
 ==============
