@@ -15,7 +15,7 @@ If you choose not to use proxies, SelfDiscord handles rate limiting by waiting t
 
 .. code-block:: python3
 
-    import SelfDiscord
+    from selfdiscord import SelfDiscord
 
     proxies = []
     with open("proxies.txt") as file:

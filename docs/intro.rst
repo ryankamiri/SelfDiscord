@@ -78,7 +78,7 @@ A quick example to showcase how SelfDiscord work:
 
 .. code-block:: python3
 
-    import SelfDiscord
+    from selfdiscord import SelfDiscord
 
     client = SelfDiscord(token='token')
     client.CreateServer("Test Server")

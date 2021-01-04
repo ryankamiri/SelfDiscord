@@ -2,7 +2,7 @@ from route import Route
 import random
 import base64
 
-class SelfDiscord(object):
+class SelfDiscord:
     def __init__(self, token, useragent=None, xsuperprops=None):
         self.token = token
         self.useragent = useragent

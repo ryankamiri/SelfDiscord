@@ -1,4 +1,4 @@
-import SelfDiscord
+from selfdiscord import SelfDiscord
 
 client = SelfDiscord(token='token')
 
