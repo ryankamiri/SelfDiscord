@@ -47,7 +47,7 @@ class Route(object):
             else:
                 response = self.s.delete("https://discord.com/api" + endpoint, json=data)
         if response.status_code == 401:
-            raise Unauthorized
+            raise InvalidToken
         elif response.status_code == 403:
             raise Forbidden
         elif response.status_code == 400:

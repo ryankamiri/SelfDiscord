@@ -1,4 +1,4 @@
-class Unauthorized(Exception):
+class InvalidToken(Exception):
     pass
 
 class Forbidden(Exception):

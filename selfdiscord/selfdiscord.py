@@ -51,22 +51,22 @@ class SelfDiscord(object):
         result = self.route.SendRequest("GET", "/users/@me/relationships", proxies)
         return result.json()
     
-    def CreateNewDM(self, recipient, proxies=None):
-        data = {"recipients":[recipient]}
+    def CreateNewDM(self, userid, proxies=None):
+        data = {"recipients":[userid]}
         result = self.route.SendRequest("POST", "/v8/users/@me/channels", proxies, data)
         return result.json()
     
-    def CreateNewGroupDM(self, channelid, recipient, proxies=None):
-        result = self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{recipient}", proxies)
+    def CreateNewGroupDM(self, channelid, userid, proxies=None):
+        result = self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{userid}", proxies)
         return result.json()
 
-    def AddToGroup(self, channelid, recipient, proxies=None):
-        self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{recipient}", proxies)
-        return f"Added {recipient} to {channelid}"
+    def AddToGroup(self, channelid, userid, proxies=None):
+        self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{userid}", proxies)
+        return f"Added {userid} to {channelid}"
     
-    def RemoveFromGroup(self, channelid, recipient, proxies=None):
-        self.route.SendRequest("DELETE", f"/v8/channels/{channelid}/recipients/{recipient}", proxies)
-        return f"Removed {recipient} from {channelid}"
+    def RemoveFromGroup(self, channelid, userid, proxies=None):
+        self.route.SendRequest("DELETE", f"/v8/channels/{channelid}/recipients/{userid}", proxies)
+        return f"Removed {userid} from {channelid}"
 
     def SendTyping(self, channelid, proxies=None):
         self.route.SendRequest("POST", f"/v8/channels/{channelid}/typing", proxies)
@@ -128,7 +128,7 @@ class SelfDiscord(object):
 
     def UnBlockUser(self, userid, proxies=None):
         self.route.SendRequest("DELETE", f"/v8/users/@me/relationships/{userid}", proxies)
-        return f"UnFriended {userid}"
+        return f"UnBlocked {userid}"
 
     def MuteChannel(self, channelid, proxies=None):
         data = {"channel_overrides":{channelid:{"muted":True,"mute_config":{"selected_time_window":-1,"end_time":None}}}}
@@ -166,7 +166,7 @@ class SelfDiscord(object):
         result = self.route.SendRequest("PATCH", "/v8/users/@me", proxies, data)
         return result.json()
 
-    def ChangeProfilePicture(self, path, proxies=None):
+    def ChangeAvatar(self, path, proxies=None):
         image = None
         with open(path, "rb") as pic:
             image = "data:image/png;base64," + base64.b64encode(pic.read()).decode('utf-8')
@@ -176,11 +176,3 @@ class SelfDiscord(object):
         
         result = self.route.SendRequest("PATCH", "/v8/users/@me", proxies, imagePayload)
         return result.json()
-
-    
-
-            
-
-
-discord = SelfDiscord("Nzg1NTkzNDEzODM0ODk5NDg2.X-7PvQ.Pi7zamBUZuoFSZAOcONRTJm26XU", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.309 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36", "eyJvcyI6IldpbmRvd3MiLCJicm93c2VyIjoiRGlzY29yZCBDbGllbnQiLCJyZWxlYXNlX2NoYW5uZWwiOiJzdGFibGUiLCJjbGllbnRfdmVyc2lvbiI6IjAuMC4zMDkiLCJvc192ZXJzaW9uIjoiMTAuMC4xODM2MyIsIm9zX2FyY2giOiJ4NjQiLCJjbGllbnRfYnVpbGRfbnVtYmVyIjo3MzgwNiwiY2xpZW50X2V2ZW50X3NvdXJjZSI6bnVsbH0=")
-print(discord.DeleteServer("795550386508791829"))
