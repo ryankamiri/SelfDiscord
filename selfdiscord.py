@@ -9,7 +9,7 @@ class SelfDiscord(object):
         self.xsuperprops = xsuperprops
         self.route = Route(token, useragent, xsuperprops)
         #Test Token
-        result = self.route.SendRequest("GET", "/v7/users/@me").json()
+        result = self.route.SendRequest("GET", "/v8/users/@me").json()
         self.id = result["id"]
         self.username = result["username"]
         self.avatar = result["avatar"]
@@ -24,7 +24,7 @@ class SelfDiscord(object):
         self.phone = result["phone"]
     
     def GetUserInfo(self, proxies=None):
-        result = self.route.SendRequest("GET", "/v7/users/@me", proxies).json()
+        result = self.route.SendRequest("GET", "/v8/users/@me", proxies).json()
         self.id = result["id"]
         self.username = result["username"]
         self.avatar = result["avatar"]
