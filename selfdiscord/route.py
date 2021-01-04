@@ -1,5 +1,5 @@
 import requests
-from errors import *
+from .errors import InvalidToken, Forbidden, BadRequest, NotFound
 import time
 import random
 
