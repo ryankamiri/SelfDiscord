@@ -1,0 +1,10 @@
+README.rst
+setup.py
+SelfDiscord.egg-info/PKG-INFO
+SelfDiscord.egg-info/SOURCES.txt
+SelfDiscord.egg-info/dependency_links.txt
+SelfDiscord.egg-info/requires.txt
+SelfDiscord.egg-info/top_level.txt
+selfdiscord/errors.py
+selfdiscord/route.py
+selfdiscord/selfdiscord.py

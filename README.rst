@@ -1,5 +1,4 @@
 SelfDiscord
-==========
 
 .. image:: https://discord.com/api/guilds/795758135679516762/embed.png
    :target: https://discord.gg/CSJZYC3AZF
