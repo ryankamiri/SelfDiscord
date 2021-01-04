@@ -36,6 +36,11 @@ class Route(object):
                 response = self.s.put("https://discord.com/api" + endpoint, proxies=proxy, json=data)
             else:
                 response = self.s.put("https://discord.com/api" + endpoint, json=data)
+        elif method == "PATCH":
+            if proxy:
+                response = self.s.patch("https://discord.com/api" + endpoint, proxies=proxy, json=data)
+            else:
+                response = self.s.patch("https://discord.com/api" + endpoint, json=data)
         elif method == "DELETE":
             if proxy:
                 response = self.s.delete("https://discord.com/api" + endpoint, proxies=proxy, json=data)

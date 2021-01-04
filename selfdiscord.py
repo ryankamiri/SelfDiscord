@@ -1,5 +1,6 @@
 from route import Route
 import random
+import base64
 
 class SelfDiscord(object):
     def __init__(self, token, useragent=None, xsuperprops=None):
@@ -64,6 +65,20 @@ class SelfDiscord(object):
         result = self.route.SendRequest("GET", f"/v8/channels/{channelid}/messages", proxies)
         return result.json()
 
+    def CreateTextChannel(self, serverid, name, parentid=None, proxies=None):
+        data = {"type":0,"name":name,"permission_overwrites":[]}
+        if parentid:
+            data["parent_id"] = parentid
+        result = self.route.SendRequest("POST", f"/v8/guilds/{serverid}/channels", proxies, data)
+        return result.json()
+    
+    def CreateVoiceChannel(self, serverid, name, parentid=None, proxies=None):
+        data = {"type":2,"name":name,"permission_overwrites":[]}
+        if parentid:
+            data["parent_id"] = parentid
+        result = self.route.SendRequest("POST", f"/v8/guilds/{serverid}/channels", proxies, data)
+        return result.json()
+
     def DeleteChannel(self, channelid, proxies=None):
         result = self.route.SendRequest("DELETE", f"/v8/channels/{channelid}", proxies)
         return result.json()
@@ -93,6 +108,25 @@ class SelfDiscord(object):
         data = {}
         self.route.SendRequest("POST", f"/v8/guilds/{serverid}/delete", proxies, data)
         return f"Deleted Server {serverid}"
+    
+    def ChangeUsername(self, username, proxies=None):
+        data = {
+            "username": username
+        }
+        
+        result = self.route.SendRequest("PATCH", "/v8/users/@me", proxies, data)
+        return result.json()
+
+    def ChangeProfilePicture(self, path, proxies=None):
+        image = None
+        with open(path, "rb") as pic:
+            image = "data:image/png;base64," + base64.b64encode(pic.read()).decode('utf-8')
+        imagePayload = {
+            "avatar": image
+        }
+        
+        result = self.route.SendRequest("PATCH", "/v8/users/@me", proxies, imagePayload)
+        return result.json()
 
     
 
