@@ -56,7 +56,7 @@ class SelfDiscord(object):
         result = self.route.SendRequest("POST", "/v8/users/@me/channels", proxies, data)
         return result.json()
     
-    def CreateNewGroupDM(self, channelid, userid, proxies=None):
+    def CreateNewGroup(self, channelid, userid, proxies=None):
         result = self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{userid}", proxies)
         return result.json()
 
@@ -93,6 +93,10 @@ class SelfDiscord(object):
 
     def GetMessages(self, channelid, proxies=None):
         result = self.route.SendRequest("GET", f"/v8/channels/{channelid}/messages", proxies)
+        return result.json()
+    
+    def GetOldMessages(self, channelid, before, proxies=None):
+        result = self.route.SendRequest("GET", f"/v8/channels/{channelid}/messages?before={before}", proxies)
         return result.json()
 
     def CreateTextChannel(self, serverid, name, parentid=None, proxies=None):
