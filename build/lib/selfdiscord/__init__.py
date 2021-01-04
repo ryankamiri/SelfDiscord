@@ -1,1 +1,0 @@
-from .selfdiscord import SelfDiscord
