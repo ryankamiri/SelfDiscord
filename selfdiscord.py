@@ -50,6 +50,27 @@ class SelfDiscord(object):
     def GetFriends(self, proxies=None):
         result = self.route.SendRequest("GET", "/users/@me/relationships", proxies)
         return result.json()
+    
+    def CreateNewDM(self, recipient, proxies=None):
+        data = {"recipients":[recipient]}
+        result = self.route.SendRequest("POST", "/v8/users/@me/channels", proxies, data)
+        return result.json()
+    
+    def CreateNewGroupDM(self, channelid, recipient, proxies=None):
+        result = self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{recipient}", proxies)
+        return result.json()
+
+    def AddToGroup(self, channelid, recipient, proxies=None):
+        self.route.SendRequest("PUT", f"/v8/channels/{channelid}/recipients/{recipient}", proxies)
+        return f"Added {recipient} to {channelid}"
+    
+    def RemoveFromGroup(self, channelid, recipient, proxies=None):
+        self.route.SendRequest("DELETE", f"/v8/channels/{channelid}/recipients/{recipient}", proxies)
+        return f"Removed {recipient} from {channelid}"
+
+    def SendTyping(self, channelid, proxies=None):
+        self.route.SendRequest("POST", f"/v8/channels/{channelid}/typing", proxies)
+        return f"Sent Typing to {channelid}"
 
     def SendMessage(self, content, channelid, proxies=None):
         data = {"content":content,"nonce":''.join([str(random.randint(1, 9)) for i in range(18)]),"tts":False}
@@ -60,6 +81,15 @@ class SelfDiscord(object):
         data = {"content":content,"nonce":''.join([str(random.randint(1, 9)) for i in range(18)]),"tts":True}
         result = self.route.SendRequest("POST", f"/v8/channels/{channelid}/messages", proxies, data)
         return result.json()
+
+    def EditMessage(self, content, channelid, messageid, proxies=None):
+        data = {"content":content}
+        result = self.route.SendRequest("PATCH", f"/v8/channels/{channelid}/messages/{messageid}", proxies, data)
+        return result.json()
+    
+    def DeleteMessage(self, channelid, messageid, proxies=None):
+        self.route.SendRequest("DELETE", f"/v8/channels/{channelid}/messages/{messageid}", proxies)
+        return f"Deleted Message {messageid}"
 
     def GetMessages(self, channelid, proxies=None):
         result = self.route.SendRequest("GET", f"/v8/channels/{channelid}/messages", proxies)
@@ -90,6 +120,25 @@ class SelfDiscord(object):
     def UnFriend(self, userid, proxies=None):
         self.route.SendRequest("DELETE", f"/v8/users/@me/relationships/{userid}", proxies)
         return f"UnFriended {userid}"
+
+    def BlockUser(self, userid, proxies=None):
+        data = {"type":2}
+        self.route.SendRequest("PUT", f"/v8/users/@me/relationships/{userid}", proxies, data)
+        return f"Blocked {userid}"
+
+    def UnBlockUser(self, userid, proxies=None):
+        self.route.SendRequest("DELETE", f"/v8/users/@me/relationships/{userid}", proxies)
+        return f"UnFriended {userid}"
+
+    def MuteChannel(self, channelid, proxies=None):
+        data = {"channel_overrides":{channelid:{"muted":True,"mute_config":{"selected_time_window":-1,"end_time":None}}}}
+        result = self.route.SendRequest("PATCH", "/v8/users/@me/guilds/%40me/settings", proxies, data)
+        return result.json()
+    
+    def UnMuteChannel(self, channelid, proxies=None):
+        data = {"channel_overrides":{channelid:{"muted":False}}}
+        result = self.route.SendRequest("PATCH", "/v8/users/@me/guilds/%40me/settings", proxies, data)
+        return result.json()
 
     def JoinServer(self, invite, proxies=None):
         result = self.route.SendRequest("POST", f"/v8/invites/{invite}", proxies)
