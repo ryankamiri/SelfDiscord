@@ -2,13 +2,22 @@ import shutil
 import os
 
 #Delete SelfDiscord.egg-info
-shutil.rmtree("SelfDiscord.egg-info/")
+try:
+    shutil.rmtree("SelfDiscord.egg-info/")
+except:
+    pass
 
 #Delete dist
-shutil.rmtree("dist/")
+try:
+    shutil.rmtree("dist/")
+except:
+    pass
 
 #Delete build
-shutil.rmtree("build/")
+try:
+    shutil.rmtree("build/")
+except:
+    pass
 
 #Run Setup
 os.system("python setup.py sdist bdist_wheel")
