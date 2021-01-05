@@ -1,9 +1,11 @@
 from .route import Route
 import random
 import base64
+import requests
 
 class SelfDiscord:
     def __init__(self, token, useragent=None, xsuperprops=None):
+        self.CheckForUpdates(0.5)
         self.token = token
         self.useragent = useragent
         self.xsuperprops = xsuperprops
@@ -23,6 +25,11 @@ class SelfDiscord:
         self.mfa_enabled = result["mfa_enabled"]
         self.phone = result["phone"]
     
+    def CheckForUpdates(self, version):
+        currentversion = float(requests.get("https://pypi.org/pypi/SelfDiscord/json").json()["info"]["version"])
+        if currentversion > version:
+            print(f"WARNING: You’re using version {version} but version {currentversion} is available. Use \"pip install SelfDiscord --upgrade\" to update.")
+
     def GetUserInfo(self, proxies=None):
         result = self.route.SendRequest("GET", "/v8/users/@me", proxies).json()
         self.id = result["id"]
