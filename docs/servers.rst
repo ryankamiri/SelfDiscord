@@ -49,7 +49,7 @@ Creates a Voice Channel in specified server.
 JoinServer
 ==============
 
-Joins server with givin invite code.
+Joins server with given invite code.
 
 .. code-block:: python3
 
@@ -71,8 +71,63 @@ Leaves specified server.
 CreateServer
 ==============
 
-Creates Server with givin name.
+Creates Server with given name.
 
 .. code-block:: python3
 
     client.CreateServer("name")
+
+.. _getserverinfo:
+
+GetServerInfo
+==============
+
+Returns server info. 
+
+.. code-block:: python3
+
+    client.GetServerInfo("serverid")
+
+.. _getserverchannels:
+
+GetServerChannels
+==============
+
+Returns server channels. 
+
+.. code-block:: python3
+
+    client.GetServerChannels("serverid")
+
+.. _getservermemberinfo:
+
+GetServerMemberInfo
+==============
+
+Returns specific member's info in a given server.
+
+.. code-block:: python3
+
+    client.GetServerMemberInfo("serverid", "userid")
+
+.. _kickuser:
+
+KickUser
+==============
+
+Kicks a user from a server.
+
+.. code-block:: python3
+
+    client.KickUser("serverid", "userid", "reason (not required)")
+
+.. _banuser:
+
+BanUser
+==============
+
+Bans a user from a server. The "delete_message_days" arguement must be a string and is the messages from x amount of days before to delete. Can be "0" as well.
+
+.. code-block:: python3
+
+    client.BanUser("serverid", "userid", "delete_message_days", "reason (not required)")

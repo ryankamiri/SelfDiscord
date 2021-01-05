@@ -153,3 +153,25 @@ Un mutes a certain channel.
 .. code-block:: python3
 
     client.UnMuteChannel("channelid")
+
+.. _addreaction:
+
+AddReaction
+==============
+
+Adds a reaction with specified emoji.
+
+.. code-block:: python3
+
+    client.AddReaction("channelid", "messageid", "💯")
+
+.. _removereaction:
+
+RemoveReaction
+==============
+
+Removes a reaction with specified emoji.
+
+.. code-block:: python3
+
+    client.RemoveReaction("channelid", "messageid", "💯")

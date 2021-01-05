@@ -188,4 +188,43 @@ class SelfDiscord:
         result = self.route.SendRequest("PATCH", "/v8/users/@me", proxies, imagePayload)
         return result.json()
     
+    def GetServerInfo(self, serverid, proxies=None):
+        result = self.route.SendRequest("GET", f"/v8/guilds/{serverid}", proxies)
+        return result.json()
+    
+    def GetServerChannels(self, serverid, proxies=None):
+        result = self.route.SendRequest("GET", f"/v8/guilds/{serverid}/channels", proxies)
+        return result.json()
+    
+    def GetServerMemberInfo(self, serverid, userid, proxies=None):
+        result = self.route.SendRequest("GET", f"/v8/guilds/{serverid}/members/{userid}", proxies)
+        return result.json()
+    
+    def KickUser(self, serverid, userid, reason=None, proxies=None):
+        if reason == None:
+            reason = ""
+        self.route.SendRequest("DELETE", f"/v8/guilds/{serverid}/members/{userid}?reason={reason}", proxies)
+        return f"Kicked {userid} from {serverid}"
+    
+    def BanUser(self, serverid, userid, delete_message_days, reason=None, proxies=None):
+        if reason == None:
+            reason = ""
+        data = {"delete_message_days":str(delete_message_days),"reason":reason}
+        self.route.SendRequest("PUT", f"/v8/guilds/{serverid}/members/bans/{userid}", proxies, data)
+        return f"Banned {userid} from {serverid}"
+
+    def AddReaction(self, channelid, messageid, emoji, proxies=None):
+        hexemoji = emoji.encode('utf-8')
+        hexemoji = hexemoji.hex()
+        hexemoji = f"%{hexemoji[0]}{hexemoji[1]}%{hexemoji[2]}{hexemoji[3]}%{hexemoji[4]}{hexemoji[5]}%{hexemoji[6]}{hexemoji[7]}"
+        self.route.SendRequest("PUT", f"/v8/channels/{channelid}/messages/{messageid}/reactions/{hexemoji}/%40me", proxies)
+        return f"Reacted with {emoji} to {messageid}"
+    
+    def DeleteReaction(self, channelid, messageid, emoji, proxies=None):
+        hexemoji = emoji.encode('utf-8')
+        hexemoji = hexemoji.hex()
+        hexemoji = f"%{hexemoji[0]}{hexemoji[1]}%{hexemoji[2]}{hexemoji[3]}%{hexemoji[4]}{hexemoji[5]}%{hexemoji[6]}{hexemoji[7]}"
+        self.route.SendRequest("DELETE", f"/v8/channels/{channelid}/messages/{messageid}/reactions/{hexemoji}/%40me", proxies)
+        return f"Deleted {emoji} from {messageid}"
+
 #Made By RedBall
