@@ -3,7 +3,7 @@ from .errors import InvalidToken, Forbidden, BadRequest, NotFound
 import time
 import random
 
-class Route(object):
+class Route:
     def __init__(self, token, useragent=None, xsuperprops=None):
         self.token = token
         self.useragent = useragent
