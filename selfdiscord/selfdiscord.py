@@ -5,7 +5,7 @@ import requests
 
 class SelfDiscord:
     def __init__(self, token, useragent=None, xsuperprops=None):
-        self.CheckForUpdates(0.5)
+        self.CheckForUpdates(0.6)
         self.token = token
         self.useragent = useragent
         self.xsuperprops = xsuperprops
@@ -47,17 +47,45 @@ class SelfDiscord:
         return result
     
     def GetServers(self, proxies=None):
-        result = self.route.SendRequest("GET", "/users/@me/guilds", proxies)
+        result = self.route.SendRequest("GET", "/v8/users/@me/guilds", proxies)
         return result.json()
     
     def GetDMs(self, proxies=None):
-        result = self.route.SendRequest("GET", "/users/@me/channels", proxies)
+        result = self.route.SendRequest("GET", "/v8/users/@me/channels", proxies)
         return result.json()
     
     def GetFriends(self, proxies=None):
-        result = self.route.SendRequest("GET", "/users/@me/relationships", proxies)
+        result = self.route.SendRequest("GET", "/v8/users/@me/relationships", proxies)
         return result.json()
     
+    def ConvertUserToChannel(self, userid, proxies=None):
+        dms = self.GetDMs(proxies)
+        for dm in dms:
+            if dm["type"] == 1 and dm["recipients"][0]["id"] == userid:
+                return dm["id"]
+        return None
+    
+    def ConvertChannelToUser(self, channelid, proxies=None):
+        dms = self.GetDMs(proxies)
+        for dm in dms:
+            if dm["type"] == 1 and dm["id"] == channelid:
+                return dm["recipients"][0]["id"]
+        return None
+    
+    def ConvertIdToUsername(self, userid, proxies=None):
+        dms = self.GetDMs(proxies)
+        for dm in dms:
+            if dm["type"] == 1 and dm["recipients"][0]["id"] == userid:
+                return dm["recipients"][0]["username"]
+        return None
+    
+    def ConvertUsernameToId(self, username, proxies=None):
+        dms = self.GetDMs(proxies)
+        for dm in dms:
+            if dm["type"] == 1 and dm["recipients"][0]["username"] == username:
+                return dm["recipients"][0]["id"]
+        return None
+
     def CreateNewDM(self, userid, proxies=None):
         data = {"recipients":[userid]}
         result = self.route.SendRequest("POST", "/v8/users/@me/channels", proxies, data)

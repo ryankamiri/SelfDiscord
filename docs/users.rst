@@ -98,3 +98,47 @@ Changes current user's avatar.
 .. code-block:: python3
 
     client.ChangeAvatar("path to avatar")
+
+.. _convertusertochannel:
+
+ConvertUserToChannel
+==============
+
+Converts user id to a channel id. Returns None if there is no dm with this user.
+
+.. code-block:: python3
+
+    client.ConvertUserToChannel("userid")
+
+.. _convertchanneltouser:
+
+ConvertChannelToUser
+==============
+
+Converts channel id to a user id. Returns None if there is no dm with this user.
+
+.. code-block:: python3
+
+    client.ConvertChannelToUser("channelid")
+
+.. _convertidtousername:
+
+ConvertIdToUsername
+==============
+
+Converts user id to username. Returns None if there is no dm with this user.
+
+.. code-block:: python3
+
+    client.ConvertIdToUsername("userid")
+
+.. _convertusernametoid:
+
+ConvertUsernameToId
+==============
+
+Converts username to user id. Returns None if there is no dm with this user.
+
+.. code-block:: python3
+
+    client.ConvertUsernameToId("username")
